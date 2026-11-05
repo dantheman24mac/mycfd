@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+  <title>MyCFD – 3D Wind Tunnel</title>
+  <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+  <canvas id="view"></canvas>
+
+  <div id="hud">
+    <div class="brand">MyCFD <span>3D Wind Tunnel</span></div>
+    <div id="stats">–</div>
+  </div>
+
+  <aside id="panel">
+    <section>
+      <h3>Simulation</h3>
+      <div class="row buttons">
+        <button id="btnPause">Pause</button>
+        <button id="btnReset">Reset flow</button>
+      </div>
+      <label>Grid resolution
+        <select id="resolution">
+          <option value="96x40x40">Low · 96×40×40</option>
+          <option value="144x56x56" selected>Medium · 144×56×56</option>
+          <option value="192x72x72">High · 192×72×72</option>
+          <option value="256x96x96">Ultra · 256×96×96</option>
+        </select>
+      </label>
+      <label>Wind speed <output id="windOut"></output>
+        <input id="wind" type="range" min="0.02" max="0.14" step="0.005" value="0.08" />
+      </label>
+      <label>Viscosity <output id="viscOut"></output>
+        <input id="visc" type="range" min="0.002" max="0.05" step="0.001" value="0.008" />
+      </label>
+      <label>Steps per frame <output id="spfOut"></output>
+        <input id="spf" type="range" min="1" max="12" step="1" value="4" />
+      </label>
+      <div class="hint" id="reynolds"></div>
+    </section>
+
+    <section>
+      <h3>Object</h3>
+      <label>Preset
+        <select id="preset">
+          <option value="sphere">Sphere</option>
+          <option value="car" selected>Car</option>
+          <option value="wing">Wing (NACA 0012)</option>
+          <option value="cylinder">Cylinder</option>
+          <option value="cube">Cube</option>
+          <option value="none">Empty tunnel</option>
+        </select>
+      </label>
+      <div class="row buttons">
+        <button id="btnImport">Import STL…</button>
+        <input id="fileStl" type="file" accept=".stl" hidden />
+      </div>
+      <label>Size <output id="sizeOut"></output>
+        <input id="size" type="range" min="0.2" max="0.9" step="0.01" value="0.5" />
+      </label>
+      <label>Yaw <output id="yawOut"></output>
+        <input id="yaw" type="range" min="-90" max="90" step="1" value="0" />
+      </label>
+      <label>Pitch / angle of attack <output id="pitchOut"></output>
+        <input id="pitch" type="range" min="-30" max="30" step="1" value="0" />
+      </label>
+    </section>
+
+    <section>
+      <h3>Visuals</h3>
+      <label class="check"><input id="showParticles" type="checkbox" checked /> Particle tracers</label>
+      <label>Particle count
+        <select id="particleCount">
+          <option value="65536">65k</option>
+          <option value="262144" selected>262k</option>
+          <option value="524288">524k</option>
+          <option value="1048576">1M</option>
+        </select>
+      </label>
+      <label>Particle colour
+        <select id="colorMode">
+          <option value="speed" selected>Speed</option>
+          <option value="vorticity">Vorticity</option>
+          <option value="seed">Seed height</option>
+        </select>
+      </label>
+      <label>Particle emission
+        <select id="emitMode">
+          <option value="volume">Whole tunnel</option>
+          <option value="rake" selected>Smoke rake (inlet plane)</option>
+        </select>
+      </label>
+      <label class="check"><input id="showDye" type="checkbox" checked /> Volumetric dye</label>
+      <label>Dye density <output id="dyeOut"></output>
+        <input id="dyeDensity" type="range" min="0.2" max="6" step="0.1" value="1.0" />
+      </label>
+      <label class="check"><input id="showObject" type="checkbox" checked /> Show object</label>
+      <div class="hint">Drag: orbit · Right-drag: pan · Wheel: zoom</div>
+    </section>
+  </aside>
+
+  <div id="error" hidden></div>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>

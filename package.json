@@ -1,0 +1,12 @@
+{
+  "name": "mycfd",
+  "version": "0.1.0",
+  "description": "Real-time 3D CFD wind tunnel (Lattice Boltzmann on WebGPU)",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^38.0.0"
+  }
+}
